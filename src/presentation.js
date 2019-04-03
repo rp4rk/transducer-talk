@@ -1,5 +1,5 @@
 // Import React
-import React from 'react';
+import React from "react";
 
 // Import Spectacle Core tags
 import {
@@ -12,44 +12,48 @@ import {
   Quote,
   Slide,
   Text,
-} from 'spectacle';
+} from "spectacle";
 
 // Import theme
-import createTheme from 'spectacle/lib/themes/default';
+import createTheme from "spectacle/lib/themes/default";
+import { Benchmarker } from "./components/benchmarker";
+import { THEME } from "./constants/theme";
 
 // Require CSS
-require('normalize.css');
+require("normalize.css");
 
 const theme = createTheme(
-  {
-    primary: 'white',
-    secondary: '#1F2022',
-    tertiary: '#03A9FC',
-    quaternary: '#CECECE',
-  },
-  {
-    primary: 'Montserrat',
-    secondary: 'Helvetica',
-  }
+  THEME.COLOR,
+  THEME.FONT
 );
 
 export default class Presentation extends React.Component {
   render() {
     return (
       <Deck
-        transition={['zoom', 'slide']}
+        transition={["zoom", "slide"]}
         transitionDuration={500}
         theme={theme}
       >
-        <Slide transition={['zoom']} bgColor="primary">
+        <Slide transition={["zoom"]} bgColor="primary">
+        <Heading size={5} caps lineHeight={1} textColor="tertiary">
+            Imperative
+          </Heading>
+          <Benchmarker
+            source="return test * 3"
+            globals={{ test: [1, 2, 3], num: 2 }}
+            showDetails
+          />
+        </Slide>
+        <Slide transition={["zoom"]} bgColor="primary">
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Spectacle Boilerplate
+            Transducers
           </Heading>
           <Text margin="10px 0 0" textColor="tertiary" size={1} fit bold>
-            open the presentation/index.js file to get started
+            data processing for the 1%
           </Text>
         </Slide>
-        <Slide transition={['fade']} bgColor="tertiary">
+        <Slide transition={["fade"]} bgColor="tertiary">
           <Heading size={6} textColor="primary" caps>
             Typography
           </Heading>
@@ -72,7 +76,7 @@ export default class Presentation extends React.Component {
             Standard text
           </Text>
         </Slide>
-        <Slide transition={['fade']} bgColor="primary" textColor="tertiary">
+        <Slide transition={["fade"]} bgColor="primary" textColor="tertiary">
           <Heading size={6} textColor="secondary" caps>
             Standard List
           </Heading>
@@ -83,7 +87,7 @@ export default class Presentation extends React.Component {
             <ListItem>Item 4</ListItem>
           </List>
         </Slide>
-        <Slide transition={['fade']} bgColor="secondary" textColor="primary">
+        <Slide transition={["fade"]} bgColor="secondary" textColor="primary">
           <BlockQuote>
             <Quote>Example Quote</Quote>
             <Cite>Author</Cite>
