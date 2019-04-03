@@ -56,10 +56,15 @@ export const StyledMs = styled.div`
   margin-bottom: ${THEME.STYLE.spacing};
 `;
 
-export const StyledCode = styled.code`
+export const StyledCode = styled.pre`
   text-align: left;
   background-color: rgba(0, 0, 0, 0.1);
   margin-bottom: auto;
+  font-size: 1.2rem;
+  padding: 12px;
+  border-radius: ${THEME.STYLE.borderRadius};
+  font-weight: 700;
+  margin-top: 0;
 `;
 
 export const BenchmarkContainer = styled.div`
@@ -72,7 +77,7 @@ export const BenchmarkContainer = styled.div`
 
   display: grid;
   grid-template-columns: ${({ showDetails }) =>
-    showDetails ? "1fr 1fr" : "1fr"};
+    showDetails ? "2fr 1fr" : "1fr"};
   grid-gap: ${THEME.STYLE.spacing};
 `;
 

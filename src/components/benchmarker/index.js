@@ -43,12 +43,14 @@ export function Benchmarker({ globals, source, showDetails, showResult }) {
         mode="javascript"
         onChange={v => setCode(v)}
         value={code}
-        fontSize={22}
+        fontSize={18}
+        tabSize={2}
+        editorProps={{$blockScrolling: true}}
       />
 
       {showDetails && (
         <DetailsPane>
-          {!showResult && <StyledCode>{error ? JSON.stringify(error) : JSON.stringify(result)}</StyledCode>}
+          {!showResult && <StyledCode>{error ? JSON.stringify(error) : JSON.stringify(result, ' ', 2)}</StyledCode>}
           {duration !== false && (
             <StyledMs duration={duration}>{duration}ms</StyledMs>
           )}

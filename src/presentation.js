@@ -12,20 +12,21 @@ import {
   Quote,
   Slide,
   Text,
+  Appear,
+  CodePane
 } from "spectacle";
 
 // Import theme
 import createTheme from "spectacle/lib/themes/default";
 import { Benchmarker } from "./components/benchmarker";
 import { THEME } from "./constants/theme";
+import { mapExample } from "./examples/mfr-example";
+import { stringifyFunction } from "./util/dispatch";
 
 // Require CSS
 require("normalize.css");
 
-const theme = createTheme(
-  THEME.COLOR,
-  THEME.FONT
-);
+const theme = createTheme(THEME.COLOR, THEME.FONT);
 
 export default class Presentation extends React.Component {
   render() {
@@ -33,59 +34,48 @@ export default class Presentation extends React.Component {
       <Deck
         transition={["zoom", "slide"]}
         transitionDuration={500}
+        contentHeight='80%'
+        contentWidth='80%'
         theme={theme}
       >
         <Slide transition={["zoom"]} bgColor="primary">
-        <Heading size={5} caps lineHeight={1} textColor="tertiary">
-            Imperative
-          </Heading>
-          <Benchmarker
-            source="return test * 3"
-            globals={{ test: [1, 2, 3], num: 2 }}
-            showDetails
-          />
-        </Slide>
-        <Slide transition={["zoom"]} bgColor="primary">
-          <Heading size={1} fit caps lineHeight={1} textColor="secondary">
+          <Heading size={1} fit caps lineHeight={1} textColor="tertiary">
             Transducers
           </Heading>
           <Text margin="10px 0 0" textColor="tertiary" size={1} fit bold>
-            data processing for the 1%
+            🤷‍♀️🤷‍♂
           </Text>
         </Slide>
-        <Slide transition={["fade"]} bgColor="tertiary">
-          <Heading size={6} textColor="primary" caps>
-            Typography
+        <Slide transition={["slide"]} bgColor="secondary">
+          <BlockQuote>
+            <Quote>[...] premature optimization is the root of all evil.</Quote>
+            <Cite textColor="quaternary">Donald Knuth</Cite>
+          </BlockQuote>
+        </Slide>
+        <Slide transition={["slide"]} bgColor="primary">
+          <Heading size={6} textColor="secondary" caps>
+            Maps, Filters, Reduces
           </Heading>
-          <Heading size={1} textColor="secondary">
-            Heading 1
-          </Heading>
-          <Heading size={2} textColor="secondary">
-            Heading 2
-          </Heading>
-          <Heading size={3} textColor="secondary">
-            Heading 3
-          </Heading>
-          <Heading size={4} textColor="secondary">
-            Heading 4
-          </Heading>
-          <Heading size={5} textColor="secondary">
-            Heading 5
-          </Heading>
-          <Text size={6} textColor="secondary">
-            Standard text
-          </Text>
+          <Appear>
+            <Text>Maps are a 1:1 transform of a list</Text>
+          </Appear>
+          <Appear>
+            <Text>
+              Filters pick items out of a list depending on your condition
+            </Text>
+          </Appear>
+          <Appear>
+            <Text>
+              Reduce is the nuclear option and can do anything you want if you
+              believe in yourself
+            </Text>
+          </Appear>
         </Slide>
         <Slide transition={["fade"]} bgColor="primary" textColor="tertiary">
-          <Heading size={6} textColor="secondary" caps>
-            Standard List
-          </Heading>
-          <List>
-            <ListItem>Item 1</ListItem>
-            <ListItem>Item 2</ListItem>
-            <ListItem>Item 3</ListItem>
-            <ListItem>Item 4</ListItem>
-          </List>
+          <Benchmarker
+            showDetails
+            source={stringifyFunction(mapExample)}
+          />
         </Slide>
         <Slide transition={["fade"]} bgColor="secondary" textColor="primary">
           <BlockQuote>

@@ -1,4 +1,5 @@
 import greenlet from 'greenlet';
+import { codeBlock } from 'common-tags';
 
 /**
  * Run some javascript code in a web worker
@@ -30,4 +31,20 @@ export async function dispatchCodeToThread(code, globals = {}) {
   })(code, globals);
 
   return result;
+}
+
+/**
+ * Stringifies a function for dispatch
+ * @param {function} fn A function to stringify for dispatch
+ * @return {string} A function string to be executed using the dispatcher
+ */
+export function stringifyFunction(fn) {
+  const name = fn.name || 'anonymous';
+  const fnString = fn.toString();
+
+  return codeBlock`
+    ${fnString}
+
+    return ${name}();
+  `
 }
