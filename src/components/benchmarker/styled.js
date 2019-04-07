@@ -41,11 +41,11 @@ export const RocketSpan = styled.span`
 
   display: inline-block;
 
-  animation-name: ${({loading}) => loading ? 'spaceboots' : ''};
-	animation-duration: 0.8s;
-	transform-origin: 50% 50%;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
+  animation-name: ${({ loading }) => (loading ? "spaceboots" : "")};
+  animation-duration: 0.8s;
+  transform-origin: 50% 50%;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 `;
 
 export const StyledMs = styled.div`
@@ -65,6 +65,8 @@ export const StyledCode = styled.pre`
   border-radius: ${THEME.STYLE.borderRadius};
   font-weight: 700;
   margin-top: 0;
+  max-height: 300px;
+  overflow-y: auto;
 `;
 
 export const BenchmarkContainer = styled.div`

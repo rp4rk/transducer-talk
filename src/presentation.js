@@ -20,8 +20,15 @@ import {
 import createTheme from "spectacle/lib/themes/default";
 import { Benchmarker } from "./components/benchmarker";
 import { THEME } from "./constants/theme";
-import { mapExample } from "./examples/mfr-example";
-import { stringifyFunction } from "./util/dispatch";
+import {
+  mapDeclarativeExample,
+  mapImperativeExample
+} from "./examples/mfr-example";
+import { mapReducerExample } from "./examples/mapAsReduce";
+import {
+  mapPerformanceBad,
+  mapPerformanceGood
+} from "./examples/mapPerformanceExample";
 
 // Require CSS
 require("normalize.css");
@@ -34,8 +41,8 @@ export default class Presentation extends React.Component {
       <Deck
         transition={["zoom", "slide"]}
         transitionDuration={500}
-        contentHeight='80%'
-        contentWidth='80%'
+        contentHeight="80%"
+        contentWidth="80%"
         theme={theme}
       >
         <Slide transition={["zoom"]} bgColor="primary">
@@ -53,35 +60,76 @@ export default class Presentation extends React.Component {
           </BlockQuote>
         </Slide>
         <Slide transition={["slide"]} bgColor="primary">
-          <Heading size={6} textColor="secondary" caps>
-            Maps, Filters, Reduces
+          <Heading size={6} fit textColor="secondary" caps>
+            Declarative and Imperative Approaches
           </Heading>
           <Appear>
-            <Text>Maps are a 1:1 transform of a list</Text>
-          </Appear>
-          <Appear>
             <Text>
-              Filters pick items out of a list depending on your condition
+              Declarative code relies on abstractions to describe operations.
             </Text>
           </Appear>
           <Appear>
             <Text>
-              Reduce is the nuclear option and can do anything you want if you
-              believe in yourself
+              Imperative code provides the computer instructions on how to do
+              something.
+            </Text>
+          </Appear>
+          <Appear>
+            <Text>
+              It's commonly said that declarative programming describes what to
+              do, whereas imperative programming describes how to do it.
             </Text>
           </Appear>
         </Slide>
-        <Slide transition={["fade"]} bgColor="primary" textColor="tertiary">
+        <Slide transition={["slide"]} bgColor="primary" textColor="tertiary">
+          <Benchmarker showDetails source={mapImperativeExample} />
+        </Slide>
+        <Slide transition={["slide"]} bgColor="primary" textColor="tertiary">
+          <Benchmarker showDetails source={mapDeclarativeExample} />
+        </Slide>
+        <Slide transition={["slide"]} bgColor="secondary" textColor="primary">
+          <Heading size={1} fit caps lineHeight={1} textColor="primary">
+            Reducers
+          </Heading>
+          <Text textColor="quaternary">(result, input) => result</Text>
+        </Slide>
+        <Slide transition={["slide"]} bgColor="secondary" textColor="primary">
+          <Heading size={1} fit caps lineHeight={1} textColor="primary">
+            Redux
+          </Heading>
+          <Text textColor="quaternary">(state, action) => newState</Text>
+        </Slide>
+        <Slide transition={["slide"]} bgColor="secondary" textColor="primary">
+          <Heading size={1} fit caps lineHeight={1} textColor="primary">
+            Transducers
+          </Heading>
+
+          <Appear>
+            <Text textColor="quaternary">reducer => reducer</Text>
+          </Appear>
+          <Appear>
+            <Text textColor="quaternary">
+              ((result, input) => result) => ((result, input) => result)
+            </Text>
+          </Appear>
+        </Slide>
+        <Slide transition={["slide"]} bgColor="primary" textColor="tertiary">
           <Benchmarker
             showDetails
-            source={stringifyFunction(mapExample)}
+            source={mapPerformanceBad}
+            globals={{
+              BIG_ARRAY: Array(1000000).fill()
+            }}
           />
         </Slide>
-        <Slide transition={["fade"]} bgColor="secondary" textColor="primary">
-          <BlockQuote>
-            <Quote>Example Quote</Quote>
-            <Cite>Author</Cite>
-          </BlockQuote>
+        <Slide transition={["slide"]} bgColor="primary" textColor="tertiary">
+          <Benchmarker
+            showDetails
+            source={mapPerformanceGood}
+            globals={{
+              BIG_ARRAY: Array(1000000).fill()
+            }}
+          />
         </Slide>
       </Deck>
     );

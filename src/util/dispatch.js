@@ -1,5 +1,7 @@
-import greenlet from 'greenlet';
-import { codeBlock } from 'common-tags';
+import greenlet from "greenlet";
+import { codeBlock } from "common-tags";
+
+import { map } from "rxjs/operators";
 
 /**
  * Run some javascript code in a web worker
@@ -11,9 +13,9 @@ export async function dispatchCodeToThread(code, globals = {}) {
     const parsedCode = new Function(
       `
         "use strict";
-        ${Object.entries(globals).map(
-          global => `const ${global[0]} = ${JSON.stringify(global[1])};`
-        ).join('\n')}
+        ${Object.entries(globals)
+          .map(global => `const ${global[0]} = ${JSON.stringify(global[1])};`)
+          .join("\n")}
         ${code}
         `
     );
@@ -26,7 +28,7 @@ export async function dispatchCodeToThread(code, globals = {}) {
       result,
       timeBefore,
       timeAfter,
-      duration: timeAfter - timeBefore,
+      duration: timeAfter - timeBefore
     };
   })(code, globals);
 
@@ -39,12 +41,12 @@ export async function dispatchCodeToThread(code, globals = {}) {
  * @return {string} A function string to be executed using the dispatcher
  */
 export function stringifyFunction(fn) {
-  const name = fn.name || 'anonymous';
+  const name = fn.name || "anonymous";
   const fnString = fn.toString();
 
   return codeBlock`
     ${fnString}
 
     return ${name}();
-  `
+  `;
 }
