@@ -23,12 +23,19 @@ import { THEME } from "./constants/theme";
 import {
   mapDeclarativeExample,
   mapImperativeExample
-} from "./examples/mfr-example";
-import { mapReducerExample } from "./examples/mapAsReduce";
+} from "./examples/mfrExample";
+import {
+  mapReducerExample,
+  filterReducerExample,
+  combinerLogic
+} from "./examples/operationsAsReduce";
 import {
   mapPerformanceBad,
   mapPerformanceGood
 } from "./examples/mapPerformanceExample";
+import { combineAll } from "rxjs/operators";
+import { singleValueExample } from "./examples/singleValueExample";
+import { WebsocketList } from "./components/websocket";
 
 // Require CSS
 require("normalize.css");
@@ -99,6 +106,24 @@ export default class Presentation extends React.Component {
           </Heading>
           <Text textColor="quaternary">(state, action) => newState</Text>
         </Slide>
+        <Slide transition={["slide"]} bgColor="primary" textColor="tertiary">
+          <Heading size={6} caps lineHeight={1} textColor="secondary">
+            Map Reduce
+          </Heading>
+          <Benchmarker showDetails source={mapReducerExample} />
+        </Slide>
+        <Slide transition={["slide"]} bgColor="primary" textColor="tertiary">
+          <Heading size={6} caps lineHeight={1} textColor="secondary">
+            Filter Reduce
+          </Heading>
+          <Benchmarker showDetails source={filterReducerExample} />
+        </Slide>
+        <Slide transition={["slide"]} bgColor="primary" textColor="tertiary">
+          <Heading size={6} caps lineHeight={1} textColor="secondary">
+            Separating the Combiner
+          </Heading>
+          <Benchmarker showDetails source={combinerLogic} />
+        </Slide>
         <Slide transition={["slide"]} bgColor="secondary" textColor="primary">
           <Heading size={1} fit caps lineHeight={1} textColor="primary">
             Transducers
@@ -114,22 +139,37 @@ export default class Presentation extends React.Component {
           </Appear>
         </Slide>
         <Slide transition={["slide"]} bgColor="primary" textColor="tertiary">
+          <Heading size={6} caps lineHeight={1} textColor="secondary">
+            Why Transducers?
+          </Heading>
           <Benchmarker
             showDetails
             source={mapPerformanceBad}
             globals={{
-              BIG_ARRAY: Array(1000000).fill()
+              BIG_ARRAY: Array(10000000).fill()
             }}
           />
         </Slide>
         <Slide transition={["slide"]} bgColor="primary" textColor="tertiary">
+          <Heading size={6} caps lineHeight={1} textColor="secondary">
+            Performance <em>AND</em> Composability
+          </Heading>
           <Benchmarker
             showDetails
             source={mapPerformanceGood}
             globals={{
-              BIG_ARRAY: Array(1000000).fill()
+              BIG_ARRAY: Array(10000000).fill()
             }}
           />
+        </Slide>
+        <Slide transition={["slide"]} bgColor="primary" textColor="tertiary">
+          <Heading size={6} caps lineHeight={1} textColor="secondary">
+            Operating on Single Values
+          </Heading>
+          <Benchmarker showDetails source={singleValueExample} />
+        </Slide>
+        <Slide transition={["slide"]} bgColor="secondary" textColor="tertiary">
+          <WebsocketList />
         </Slide>
       </Deck>
     );

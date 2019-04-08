@@ -4,7 +4,7 @@ export const mapPerformanceBad = codeBlock`
 // Time at the start of script execution
 const TIME_BEFORE = self.performance.now();
 
-// BIG_ARRAY is an array with 1,000,000 items
+// BIG_ARRAY is an array with 10,000,000 items
 BIG_ARRAY
   .map((_, idx) => idx)
   .map(i => i * 2)

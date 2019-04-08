@@ -5,7 +5,9 @@
   "dependencies": {
     "brace": "^0.11.1",
     "common-tags": "^1.8.0",
+    "faker": "^4.1.0",
     "greenlet": "^1.0.1",
+    "nodemon": "^1.18.11",
     "react": "^16.8.6",
     "react-ace": "^6.4.0",
     "react-dom": "^16.8.6",
@@ -17,7 +19,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "wss": "nodemon src/server/index.js",
+    "wsc": "nodemon src/server/client.js"
   },
   "eslintConfig": {
     "extends": "react-app"
