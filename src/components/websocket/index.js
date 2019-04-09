@@ -25,22 +25,28 @@ const addYearlyIncome = member => ({
   yearlyCost: member.cost * 12
 });
 
-// Create the transducer
-const transducer = compose(
-  map(parseToJSON),
-  filter(nonFreeMembership),
-  map(addYearlyIncome)
-);
-
-// Create our combiner
-const combiner = (fn, val) => fn(val);
-
-// Random emoji
+// Generate a random emoji
+// Bro you posts emojis
+// Stop
 const randomEmoji = () => {
   const emojis = ["🎉🎉🎉", "🤑🤑🤑", "💰💰💰", "💲💲💲", "🙏🙏🙏"];
 
   return emojis[Math.floor(Math.random() * emojis.length)];
 };
+
+// Create the transducer
+const transducer = compose(
+  map(parseToJSON),
+  filter(nonFreeMembership),
+  map(addYearlyIncome),
+  map(i => ({
+    ...i,
+    emojis: randomEmoji()
+  }))
+);
+
+// Create our combiner
+const combiner = (fn, val) => fn(val);
 
 export function WebsocketList() {
   const [people, addPeople] = useState([]);
@@ -93,7 +99,7 @@ export function WebsocketList() {
         <rect x="0" y="0" width="36" height="36" fill-opacity="0" />
       </svg>
       <p>
-        {person.name} pledged £{person.cost / 10} this year! {randomEmoji()}
+        {person.name} pledged £{person.cost / 10} this year! {person.emojis}
       </p>
     </PersonContainer>
   ));

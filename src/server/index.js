@@ -2,6 +2,7 @@ const WebSocket = require("ws");
 const faker = require("faker");
 
 // Create a fake object
+let wasNull = false;
 const createMember = (
   nameset = [
     "Barry Bribben",
@@ -19,16 +20,23 @@ const createMember = (
     "Schmyan Schmark"
   ]
 ) => {
+  // Having multiple nulls in a row looks unresponsive 😢
+  const cost =
+    Math.random() > 0.15 || wasNull
+      ? faker.random.number({ min: 800, max: 1200, precision: 100 })
+      : null;
+
+  // Set wasNull for next call
+  // The irony of this being here for a presentation that denounces side effects
+  wasNull = !cost;
+
   return {
     uuid: faker.random.uuid(),
     name:
       Math.random() >= 0.4
         ? `${faker.name.firstName()} ${faker.name.lastName()}`
         : nameset[Math.floor(Math.random() * nameset.length)],
-    cost:
-      Math.random() > 0.33
-        ? faker.random.number({ min: 800, max: 1200, precision: 100 })
-        : null
+    cost
   };
 };
 
@@ -48,10 +56,10 @@ function broadcast(wss, message) {
   });
 }
 
-// Send a bit of JSON every second
+// Send a bit of JSON every second or so
 setInterval(() => {
   broadcast(wss, JSON.stringify(createMember()));
-}, 1000);
+}, 750);
 
 // Hipster message for console
 console.log("WebSocket server started on port 8081 🚀");
