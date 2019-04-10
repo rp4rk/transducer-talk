@@ -1,6 +1,6 @@
 // Import React
 import React from "react";
-
+import { codeBlock } from "common-tags";
 // Import Spectacle Core tags
 import {
   BlockQuote,
@@ -33,7 +33,6 @@ import {
   mapPerformanceBad,
   mapPerformanceGood
 } from "./examples/mapPerformanceExample";
-import { combineAll } from "rxjs/operators";
 import { singleValueExample } from "./examples/singleValueExample";
 import { WebsocketList } from "./components/websocket";
 
@@ -53,7 +52,7 @@ export default class Presentation extends React.Component {
         theme={theme}
       >
         <Slide transition={["zoom"]} bgColor="primary">
-          <Heading size={1} fit caps lineHeight={1} textColor="tertiary">
+          <Heading size={1} fit caps lineHeight={1} textColor="secondary">
             Transducers
           </Heading>
           <Text margin="10px 0 0" textColor="tertiary" size={1} fit bold>
@@ -170,6 +169,83 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide transition={["slide"]} bgColor="secondary" textColor="tertiary">
           <WebsocketList />
+        </Slide>
+        <Slide transition={["slide"]} bgColor="secondary" textColor="tertiary">
+          <CodePane
+            lang="js"
+            textSize={22}
+            bold
+            source={codeBlock`
+            // Combiner function
+            const combiner = (fn, val) => fn(val);
+
+            // Use Effect Hook
+            useEffect(() => {
+              const ws = new WebSocket("ws://localhost:8081");
+              
+              // addPeople comes from a hook
+              ws.onmessage = ({ data }) => transducer(combiner)(addPeople, data);
+          
+              return function cleanup() {
+                ws.close();
+              };
+            });
+          `}
+          />
+          <Text textColor="quaternary" textSize={12} textAlign="right">
+            * slight pseudocode
+          </Text>
+        </Slide>
+        <Slide transition={["slide"]} textColor="secondary">
+          <Heading size={3} caps lineHeight={1}>
+            Practical Use?
+          </Heading>
+          <Text>Libraries can provide this stuff!</Text>
+        </Slide>
+        <Slide transition={["slide"]} bgColor="secondary" textColor="primary">
+          <Heading
+            size={6}
+            caps
+            lineHeight={1}
+            textColor="quaternary"
+            textAlign="left"
+          >
+            RXJS - Probably your best bet
+          </Heading>
+          <CodePane
+            lang="js"
+            textSize={22}
+            bold
+            source={codeBlock`
+            // Regular RXJS operators
+            import { map, take, reduce } from 'rxjs/operators';
+
+            // Transducer wrapped for iterables 
+            import { transducer } from 'rxjs-transducer';
+
+            // A regular array of numbers
+            const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+            // 30 (2 + 4 + 6 + 8 + 10)
+            return transducer(numbers)(
+              map(i => i * 2),
+              take(5),
+              reduce((a, c) => a + c),
+            )[0];
+          `}
+          />
+          <Text textColor="quaternary" textSize={12} textAlign="right">
+            * this is actual code
+          </Text>
+        </Slide>
+        <Slide
+          bgImage={require("./images/dan-bg.jpg")}
+          transition={["slide"]}
+          textColor="secondary"
+        >
+          <Heading size={3} caps lineHeight={1} style={{ marginTop: 450 }}>
+            Obligatory Questions Slide
+          </Heading>
         </Slide>
       </Deck>
     );
