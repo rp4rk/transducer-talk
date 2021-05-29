@@ -13,7 +13,7 @@
     "react-dom": "^16.8.6",
     "spectacle-scripts": "2.3.0",
     "styled-components": "^4.2.0",
-    "ws": "^6.2.1"
+    "ws": "^7.4.6"
   },
   "scripts": {
     "start": "react-scripts start",
